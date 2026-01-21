@@ -234,6 +234,12 @@ internal static class Program
             var action = (Console.ReadLine() ?? "").Trim().ToUpperInvariant();
 
             if (action == "B") return;
+            if (action != "A" && action != "R")
+            {
+                Console.WriteLine("Invalid action.");
+                ConsoleHelpers.Pause();
+                continue;
+            }
 
             var idx = ConsoleHelpers.ReadInt("Select voucher number from list: ", 1, pending.Count) - 1;
             var selected = pending[idx];
@@ -250,10 +256,6 @@ internal static class Program
                 var reason = ConsoleHelpers.ReadRequired("Reason for rejection: ");
                 var res = _petty.RejectExpense(_currentUser.Username, selected.Id, reason);
                 Console.WriteLine(res.Success ? $"✅ {res.Message}" : $"❌ {res.Message}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid action.");
             }
 
             ConsoleHelpers.Pause();
